@@ -6,9 +6,11 @@ from .models import Measure
 from .models import FoodItem
 from .models import Ingredient
 from .models import Step
+from .models import Tag
 
 admin.site.register(Recipe)
 admin.site.register(Measure)
 admin.site.register(FoodItem)
 admin.site.register(Ingredient)
 admin.site.register(Step)
+admin.site.register(Tag)
