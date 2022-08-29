@@ -2,12 +2,12 @@ from django.db import models
 
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=125, null=True)
-    author = models.CharField(max_length=100, null=True)
-    description = models.TextField(null=True)
+    name = models.CharField(max_length=125)
+    author = models.CharField(max_length=100)
+    description = models.TextField()
     image = models.URLField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True, null=True)
-    updated = models.DateTimeField(auto_now=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name + " by " + self.author
@@ -18,14 +18,14 @@ class Measure(models.Model):
     abbreviation = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
-        return self.name + " cups equals " + self.abbreviation + " teaspoons"
+        return str(self.name) + str(self.abbreviation)
 
 
 class FoodItem(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Ingredient(models.Model):
@@ -38,13 +38,10 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return (
-            self.amount
-            + " "
-            + self.recipe
-            + +" "
-            + self.measure
-            + " "
-            + self.food
+            str(self.amount)
+            + str(self.recipe)
+            + str(self.measure)
+            + str(self.food)
         )
 
 
@@ -56,25 +53,21 @@ class Step(models.Model):
     )
     order = models.PositiveIntegerField()
     directions = models.CharField(max_length=300)
-    food_items = models.ManyToManyField("FoodItem", null=True, blank=True)
+    food_items = models.ManyToManyField("FoodItem", blank=True)
 
     def __str__(self):
         return (
-            " "
-            + self.recipe
-            + " "
-            + self.order
-            + " "
-            + self.directions
-            + " "
-            + self.food_items
+            str(self.recipe)
+            + str(self.order)
+            + str(self.directions)
+            + str(self.food_items)
         )
         # return f" {self.recipe} {self.order} {self.directions}"
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
-    recipes = models.ManyToManyField(Recipe, related_name="tags")
+    recipes = models.ManyToManyField("Recipe", related_name="tags")
 
     def __str__(self):
         return self.name + self.recipes
